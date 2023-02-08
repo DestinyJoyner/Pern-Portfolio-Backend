@@ -18,10 +18,11 @@ router.post("/", loginSchema, validationError, async (req, resp) => {
         const validPassword = await bcrypt.compare(password, verifiedUser.password)
         validPassword ? 
         resp.status(200).json({
+            userName: verifiedUser.userName,
             token: verifiedUser.password,
             id : verifiedUser.id
         }) :
-        resp.status(404).json(validPassword)
+        resp.status(404).json("Invalid Password")
     }
     else {
         resp.status(404).json("User not found")

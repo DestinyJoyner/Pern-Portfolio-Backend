@@ -30,6 +30,8 @@ router.post("/", registrationSchema, validationError, async (req, resp) => {
         resp.status(200).json({
         Status: "Success your account has been created",
         userName: newUser.userName,
+        token: newUser.password,
+        id: newUser.id
         }) :
         resp.status(500).json({error: newUser.message})
     }
