@@ -13,6 +13,21 @@ async function getUser(string) {
     }
 }
 
+// delete user
+async function deleteUser(idValue) {
+    try {
+        const deletedUser = await database.one(
+            'DELETE FROM users WHERE id = $1, RETURNING *', idValue
+        )
+        return deletedUser
+        
+    } 
+    catch (error) {
+        return error 
+    }
+}
+
 module.exports = {
-    getUser
+    getUser,
+    deleteUser
 }
