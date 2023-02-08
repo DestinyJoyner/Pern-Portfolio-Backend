@@ -3,16 +3,15 @@ const bcrypt = require("bcryptjs")
 const router = express.Router()
 const { scheduleSchema } = require("../Validations/scheduleValidation.js") 
 const { validationError } = require("../Validations/errorValidation.js")
-const { getSchedule, createSchedule, } = require("../Queries/schedule-queries.js")
-const { getUser } = require("../Queries/login-queries.js")
+const { getSchedule, createSchedule, getOneSchedule } = require("../Queries/schedule-queries.js")
+const { getUserId } = require("../Queries/login-queries.js")
 
 
 
 // get needs queries based on user access
-router.get("/:userId", async (req,resp) => {
-    const { user, credentials } = req.query
-    const { userId } = req.params
-    const verifiedUser = await getUser(user)
+router.get("/", async (req,resp) => {
+    const { userId, credentials } = req.query
+    const verifiedUser = await getUserId(userId)
 
     if(verifiedUser.id === +userId && verifiedUser.password === credentials){
         const schedule = await getSchedule(userId)
@@ -25,6 +24,25 @@ router.get("/:userId", async (req,resp) => {
         resp.status(404).json({error: "Authorization Required"})
     }
 })
+
+
+
+// router.get("/:userId", async (req,resp) => {
+//     const { user, credentials } = req.query
+//     const { userId } = req.params
+//     const verifiedUser = await getUser(user)
+
+//     if(verifiedUser.id === +userId && verifiedUser.password === credentials){
+//         const schedule = await getSchedule(userId)
+        
+//         schedule[0] ?
+//         resp.status(200).json(schedule) :
+//         resp.status(404).json("No schedule available")
+//     }
+//     else {
+//         resp.status(404).json({error: "Authorization Required"})
+//     }
+// })
 
 // add a scheduled event
 router.post("/:userId", scheduleSchema, validationError, async (req, resp) => {
@@ -43,6 +61,17 @@ router.post("/:userId", scheduleSchema, validationError, async (req, resp) => {
         resp.status(404).json({error: "Authorization Required"})
     }
 
+})
+
+// Get scheduled event(s) for ONE DAY
+router.get("/:userId/:date", async (req, resp) => {
+    const { user, credentials } = req.query
+    const { userId, date } = req.params
+    const verifiedUser = await getUser(user)
+
+    if(verifiedUser.id === +userId && verifiedUser.password === credentials){
+
+    }
 })
 
 

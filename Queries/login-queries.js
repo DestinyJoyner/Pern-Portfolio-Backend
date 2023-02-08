@@ -13,7 +13,22 @@ async function getUser(string) {
     }
 }
 
+//get user by id
+async function getUserId (idValue) {
+    try {
+        const user = await database.one('SELECT * FROM users WHERE id = $1', idValue)
+        return user
+        
+    } 
+    catch (error) {
+        return error
+        
+    }
+
+}
+
 
 module.exports = {
-    getUser
+    getUser,
+    getUserId
 }

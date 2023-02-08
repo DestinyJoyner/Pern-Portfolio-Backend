@@ -12,3 +12,5 @@ CREATE TABLE schedules (
     FOREIGN KEY (user_id) REFERENCES users(id) ON
     DELETE CASCADE
 );
+
+

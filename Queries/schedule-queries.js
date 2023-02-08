@@ -35,10 +35,29 @@ async function createSchedule(obj){
 
 }
 
+// function update  schedule table with values from calendar
+
+
+// function get ONE day events from schedule
+
+async function getOneSchedule () {
+    try {
+        const thisDay = await database.any(
+            '')
+        
+    } 
+    catch (error) {
+        return error
+        
+    }
+}
+
 
 
 
 module.exports = {
     getSchedule,
     createSchedule,
+    getOneSchedule,
+    
 }
