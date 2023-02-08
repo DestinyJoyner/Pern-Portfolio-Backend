@@ -41,9 +41,8 @@ async function createSchedule(obj){
 async function getOneSchedule (idValue) {
     try {
         const oneSchedule = await database.one(
-            'SELECT * FROM schedules WHERE id = $1', idValue)
+            'SELECT * FROM schedules INNER JOIN calendar ON cal_date = day_start WHERE id = $1', idValue)
         return oneSchedule
-        
     } 
     catch (error) {
         return error
