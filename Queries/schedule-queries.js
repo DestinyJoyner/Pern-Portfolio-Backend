@@ -35,15 +35,14 @@ async function createSchedule(obj){
 
 }
 
-// function update  schedule table with values from calendar
-
 
 // function get ONE day events from schedule
 
-async function getOneSchedule () {
+async function getOneSchedule (idValue) {
     try {
-        const thisDay = await database.any(
-            '')
+        const oneSchedule = await database.one(
+            'SELECT * FROM schedules WHERE id = $1', idValue)
+        return oneSchedule
         
     } 
     catch (error) {

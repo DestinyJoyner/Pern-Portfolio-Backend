@@ -8,7 +8,7 @@ const { getUserId } = require("../Queries/login-queries.js")
 
 
 
-// get needs queries based on user access
+// get ENTIRE SCHEDULE needs queries based on user access
 router.get("/", async (req,resp) => {
     const { userId, credentials } = req.query
     const verifiedUser = await getUserId(userId)
@@ -18,7 +18,7 @@ router.get("/", async (req,resp) => {
         
         schedule[0] ?
         resp.status(200).json(schedule) :
-        resp.status(404).json("No schedule available")
+        resp.status(200).json("No schedule available")
     }
     else {
         resp.status(404).json({error: "Authorization Required"})
@@ -26,36 +26,17 @@ router.get("/", async (req,resp) => {
 })
 
 
-
-// router.get("/:userId", async (req,resp) => {
-//     const { user, credentials } = req.query
-//     const { userId } = req.params
-//     const verifiedUser = await getUser(user)
-
-//     if(verifiedUser.id === +userId && verifiedUser.password === credentials){
-//         const schedule = await getSchedule(userId)
-        
-//         schedule[0] ?
-//         resp.status(200).json(schedule) :
-//         resp.status(404).json("No schedule available")
-//     }
-//     else {
-//         resp.status(404).json({error: "Authorization Required"})
-//     }
-// })
-
 // add a scheduled event
-router.post("/:userId", scheduleSchema, validationError, async (req, resp) => {
-    const { user, credentials } = req.query
-    const { userId } = req.params
-    const verifiedUser = await getUser(user)
+router.post("/", scheduleSchema, validationError, async (req, resp) => {
+    const { userId, credentials } = req.query
+    const verifiedUser = await getUserId(userId)
 
     if(verifiedUser.id === +userId && verifiedUser.password === credentials){
         const newSchedule  = await createSchedule(req.body)
         
         newSchedule.id ?
         resp.status(200).json(newSchedule) :
-        resp.status(404).json({error: newSchedule.message})
+        resp.status(500).json({error: newSchedule.message})
     }
     else {
         resp.status(404).json({error: "Authorization Required"})
@@ -64,13 +45,20 @@ router.post("/:userId", scheduleSchema, validationError, async (req, resp) => {
 })
 
 // Get scheduled event(s) for ONE DAY
-router.get("/:userId/:date", async (req, resp) => {
-    const { user, credentials } = req.query
-    const { userId, date } = req.params
-    const verifiedUser = await getUser(user)
+router.get("/:scheduleId", async (req, resp) => {
+    const { userId, credentials } = req.query
+    const { scheduleId } = req.params
+    const verifiedUser = await getUserId(userId)
 
     if(verifiedUser.id === +userId && verifiedUser.password === credentials){
+        const thisSchedule = await getOneSchedule(scheduleId)
 
+        thisSchedule.id ?
+        resp.status(200).json(thisSchedule) :
+        resp.status(500).json({error:thisSchedule.message})
+    }
+    else {
+        resp.status(404).json({error: "Authorization Required"})
     }
 })
 
