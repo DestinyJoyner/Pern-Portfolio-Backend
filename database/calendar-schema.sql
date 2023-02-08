@@ -24,7 +24,7 @@ INSERT INTO calendar (cal_date, cal_month, cal_day, cal_year, cal_day_name, cal_
 EXTRACT(MONTH FROM StartDate),
 EXTRACT(DAY FROM StartDate),
 EXTRACT(YEAR FROM StartDate),
-TO_CHAR(StartDate, 'dy'),
+TO_CHAR(StartDate, 'Day'),
 TO_CHAR(StartDate, 'Month')
 );
 StartDate := StartDate + interval '1 day';
