@@ -7,6 +7,7 @@ app.use(express.json())
 
 app.use("/login", require("./Controllers/Login.js"))
 app.use("/register", require("./Controllers/Register.js"))
+app.use("/schedule", require("./Controllers/Schedule.js"))
 
 app.get("/", (req, resp) => {
     resp.status(200).send("<h1>Portfolio Server</h1>")

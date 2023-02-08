@@ -2,7 +2,7 @@ const express = require("express")
 const bcrypt = require("bcryptjs")
 const router = express.Router()
 // database query functions
-const { createUser, userExist, } = require("../Queries/register-queries.js")
+const { createUser, userExist, deleteUser } = require("../Queries/register-queries.js")
 // validation functions
 const {  registrationSchema } = require("../Validations/registerValidation.js")
 const { validationError } = require("../Validations/errorValidation.js")
@@ -33,6 +33,16 @@ router.post("/", registrationSchema, validationError, async (req, resp) => {
         }) :
         resp.status(500).json({error: newUser.message})
     }
+})
+
+// delete user
+router.delete("/:id", async (req, resp) => {
+    const { id } = req.params
+    const deletedUser = await deleteUser(id)
+
+    deletedUser.id ?
+    resp.status(200).json("Account Deleted") :
+    resp.status(404).json("User Not Found")
 })
 
 
