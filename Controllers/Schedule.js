@@ -8,13 +8,12 @@ const { getUser } = require("../Queries/login-queries.js")
 
 
 // get needs queries based on user access
-router.get("/schedule/:userId", async (req,resp) => {
+router.get("/:userId", async (req,resp) => {
     const { user, credentials } = req.query
     const { userId } = req.params
     const verifiedUser = await getUser(user)
-    const validPassword = await bcrypt.compare(credentials, verifiedUser.password)
 
-    if(verifiedUser.id === +userId && validPassword){
+    if(verifiedUser.id === +userId && verifiedUser.password === credentials){
         const schedule = await getSchedule(userId)
         
         schedule[0] ?
