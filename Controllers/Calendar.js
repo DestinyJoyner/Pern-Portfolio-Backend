@@ -11,6 +11,15 @@ router.get("/", async (req, resp) => {
     resp.status(200).json("No Dates Available")
 })
 
+// GET ONE DATE ROUTE
+router.get("/:date", async (req, resp) => {
+    const { date } = req.params
+    const thisDate = await getOneDate(date)
+    thisDate.cal_date ?
+    resp.status(200).json(thisDate) :
+    resp.status(500).json("Date not found")
+})
+
 
 
 module.exports = router
