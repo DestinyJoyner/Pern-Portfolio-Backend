@@ -14,7 +14,7 @@ router.get("/schedule/:userId", async (req,resp) => {
     const verifiedUser = await getUser(user)
     const validPassword = await bcrypt.compare(credentials, verifiedUser.password)
 
-    if(verifiedUser.id === userId && validPassword){
+    if(verifiedUser.id === +userId && validPassword){
         const schedule = await getSchedule(userId)
         
         schedule[0] ?
