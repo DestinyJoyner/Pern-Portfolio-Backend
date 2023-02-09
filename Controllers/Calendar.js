@@ -2,6 +2,9 @@ const express = require("express")
 const router = express.Router()
 const { getAllDates, getOneDate } = require("../Queries/calendar-queries.js")
 
+// mergeParams test
+router.use("/:date/schedule", require("./Schedule.js"))
+
 // GET ALL DATES FROM GENERATED CALENDAR
 router.get("/", async (req, resp) => {
     const allDates = await getAllDates()
