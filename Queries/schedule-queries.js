@@ -12,7 +12,6 @@ async function getSchedule (userIdValue){
 }
 
 // function new scheduled event
-
 async function createSchedule(obj){
     try {
         const newSchedule = database.one(
@@ -32,12 +31,9 @@ async function createSchedule(obj){
     catch (error) {
         return error
     }
-
 }
 
-
-// function get ONE day events from schedule
-
+// function get ONE event from schedule
 async function getOneSchedule (idValue) {
     try {
         const oneSchedule = await database.one(
@@ -45,17 +41,26 @@ async function getOneSchedule (idValue) {
         return oneSchedule
     } 
     catch (error) {
-        return error
-        
+        return error  
     }
 }
 
-
+async function deleteSchedule(idValue) {
+    try {
+        const deletedEvent = await database.one('DELETE FROM schedules WHERE id = $1 RETURNING *', idValue)
+        return deletedEvent
+      
+    } 
+    catch (error) {
+        return error
+    }
+}
 
 
 module.exports = {
     getSchedule,
     createSchedule,
     getOneSchedule,
+    deleteSchedule,
     
 }

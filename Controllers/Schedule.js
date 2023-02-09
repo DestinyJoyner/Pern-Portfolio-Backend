@@ -1,65 +1,48 @@
 const express = require("express")
-const bcrypt = require("bcryptjs")
 const router = express.Router()
-const { scheduleSchema } = require("../Validations/scheduleValidation.js") 
+const { scheduleSchema, scheduleUserCheck } = require("../Validations/scheduleValidation.js") 
 const { validationError } = require("../Validations/errorValidation.js")
-const { getSchedule, createSchedule, getOneSchedule } = require("../Queries/schedule-queries.js")
-const { getUserId } = require("../Queries/login-queries.js")
+const { getSchedule, createSchedule, getOneSchedule, deleteSchedule } = require("../Queries/schedule-queries.js")
 
-
+router.use(scheduleUserCheck)
 
 // get ENTIRE SCHEDULE needs queries based on user access
 router.get("/", async (req,resp) => {
-    const { userId, credentials } = req.query
-    const verifiedUser = await getUserId(userId)
-
-    if(verifiedUser.id === +userId && verifiedUser.password === credentials){
-        const schedule = await getSchedule(userId)
+    const { userId } = req.query
+    const schedule = await getSchedule(userId)
         
-        schedule[0] ?
-        resp.status(200).json(schedule) :
-        resp.status(200).json("No schedule available")
-    }
-    else {
-        resp.status(404).json({error: "Authorization Required"})
-    }
+    schedule[0] ?
+    resp.status(200).json(schedule) :
+    resp.status(200).json("No schedule available")
 })
 
-
-// add a scheduled event
+// CREATE SCHEDULED EVENT
 router.post("/", scheduleSchema, validationError, async (req, resp) => {
-    const { userId, credentials } = req.query
-    const verifiedUser = await getUserId(userId)
-
-    if(verifiedUser.id === +userId && verifiedUser.password === credentials){
-        const newSchedule  = await createSchedule(req.body)
+   const newSchedule  = await createSchedule(req.body)
         
-        newSchedule.id ?
-        resp.status(200).json(newSchedule) :
-        resp.status(500).json({error: newSchedule.message})
-    }
-    else {
-        resp.status(404).json({error: "Authorization Required"})
-    }
-
+   newSchedule.id ?
+   resp.status(200).json(newSchedule) :
+   resp.status(500).json({error: newSchedule.message})
 })
 
-// Get scheduled event(s) for ONE DAY
+// GET ONE SCHEDULED EVENT
 router.get("/:scheduleId", async (req, resp) => {
-    const { userId, credentials } = req.query
     const { scheduleId } = req.params
-    const verifiedUser = await getUserId(userId)
+    const thisSchedule = await getOneSchedule(scheduleId)
+    
+    thisSchedule.id ?
+    resp.status(200).json(thisSchedule) :
+    resp.status(500).json({error:thisSchedule.message})
+})
 
-    if(verifiedUser.id === +userId && verifiedUser.password === credentials){
-        const thisSchedule = await getOneSchedule(scheduleId)
-
-        thisSchedule.id ?
-        resp.status(200).json(thisSchedule) :
-        resp.status(500).json({error:thisSchedule.message})
-    }
-    else {
-        resp.status(404).json({error: "Authorization Required"})
-    }
+// DELETED SCHEDULED EVENT
+router.delete("/:scheduleId", async (req, resp) => {
+    const { scheduleId } = req.params
+    const deletedEvent = await deleteSchedule(scheduleId)
+    
+    deletedEvent.id ?
+    resp.status(200).json(deletedEvent) :
+    resp.status(500).json({error : deletedEvent.message})
 })
 
 
