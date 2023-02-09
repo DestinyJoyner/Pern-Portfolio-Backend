@@ -2,7 +2,7 @@ const express = require("express")
 const router = express.Router()
 const { scheduleSchema, scheduleUserCheck } = require("../Validations/scheduleValidation.js") 
 const { validationError } = require("../Validations/errorValidation.js")
-const { getSchedule, createSchedule, getOneSchedule, deleteSchedule } = require("../Queries/schedule-queries.js")
+const { getSchedule, createSchedule, getOneSchedule, deleteSchedule, updateSchedule } = require("../Queries/schedule-queries.js")
 
 router.use(scheduleUserCheck)
 
@@ -35,7 +35,7 @@ router.get("/:scheduleId", async (req, resp) => {
     resp.status(500).json({error:thisSchedule.message})
 })
 
-// DELETED SCHEDULED EVENT
+// DELETE SCHEDULED EVENT
 router.delete("/:scheduleId", async (req, resp) => {
     const { scheduleId } = req.params
     const deletedEvent = await deleteSchedule(scheduleId)
@@ -43,6 +43,16 @@ router.delete("/:scheduleId", async (req, resp) => {
     deletedEvent.id ?
     resp.status(200).json(deletedEvent) :
     resp.status(500).json({error : deletedEvent.message})
+})
+
+// UPDATE SCHEDULED EVENT
+router.put("/:scheduleId", scheduleSchema, validationError, async (req, resp) => {
+    const { scheduleId } = req.params
+    const updatedEvent = await updateSchedule(scheduleId, req.body)
+
+    updatedEvent.id ?
+    resp.status(200).json(updatedEvent) :
+    resp.status(500).json({error: updatedEvent.message})
 })
 
 

@@ -45,6 +45,7 @@ async function getOneSchedule (idValue) {
     }
 }
 
+// delete event from schedule
 async function deleteSchedule(idValue) {
     try {
         const deletedEvent = await database.one('DELETE FROM schedules WHERE id = $1 RETURNING *', idValue)
@@ -56,11 +57,33 @@ async function deleteSchedule(idValue) {
     }
 }
 
+async function updateSchedule(idValue, obj) {
+    try {
+        const updatedEvent = await database.one(
+            'UPDATE schedules SET day_start = $1, title = $2, description = $3, important = $4 WHERE id = $5 RETURNING *',
+            [
+                obj.day_start,
+                obj.title, 
+                obj.description,
+                obj.important,
+                idValue
+            ]
+        )
+        return updatedEvent
+    } 
+    catch (error) {
+        return error
+        
+    }
+}
+
+
 
 module.exports = {
     getSchedule,
     createSchedule,
     getOneSchedule,
     deleteSchedule,
+    updateSchedule
     
 }
