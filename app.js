@@ -4,6 +4,8 @@ const app = express()
 
 app.use(cors())
 app.use(express.json())
+// jwt testing
+app.use(express.urlencoded({ extended: true }))
 
 app.use("/login", require("./Controllers/Login.js"))
 app.use("/register", require("./Controllers/Register.js"))
