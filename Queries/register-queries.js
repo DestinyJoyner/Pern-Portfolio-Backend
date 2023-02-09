@@ -23,7 +23,7 @@ async function createUser (obj) {
 // function to check if userName is available
 async function userExist(string) {
     try {
-        const userNameExists = await database.one('SELECT username FROM users WHERE username = $1 RETURNING*', string)
+        const userNameExists = await database.one('SELECT username FROM users WHERE username = $1', string)
      
         return userNameExists
     } 

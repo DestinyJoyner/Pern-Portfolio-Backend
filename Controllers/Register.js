@@ -16,7 +16,8 @@ router.get("/", (req, resp) => {
 router.post("/", registrationSchema, validationError, async (req, resp) => {
     const { userName, password } = req.body
     const exist = await userExist(userName)
-    if(exist){
+    console.log(exist)
+    if(exist.username){
         resp.status(400).json("UserName is not available")
     }
     else{
