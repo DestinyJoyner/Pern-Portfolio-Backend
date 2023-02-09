@@ -1,5 +1,7 @@
+const dotenv = require("dotenv")
+dotenv.config()
+const jwt = require("jsonwebtoken")
 const { body } = require("express-validator")
-const { getUserId } = require("../Queries/login-queries.js")
 
 const scheduleSchema = [
     body('day_start').exists({checkFalsy: true}).isString(),
@@ -8,16 +10,29 @@ const scheduleSchema = [
     body('user_id').exists({checkFalsy:true}).isInt()
 ]
 
-// function to check user authorization for each schedule route
-async function scheduleUserCheck(req, resp, next) {
-    const { userId, credentials } = req.query
-    const verifiedUser = await getUserId(userId)
-
-    if(verifiedUser.id === +userId && verifiedUser.password === credentials){
-        next ()
+/* 
+    axios.get(API, { 
+        headers: 
+        {"Authorization" : `Bearer ${token}`} 
+    })
+    -bearer -> [0], token -> [1] :check if true
+*/
+// function to check token
+function verifyToken(req, resp, next) {
+    const header = req.headers['authorization']
+    const tokenExist = header && header.split(" ")[1] 
+    if(tokenExist){
+        // use try catch to catch thrown error from jwt.verify (will return custom error not run the 'else' if use if/else)
+        try {
+            const verify = jwt.verify(tokenExist, process.env.SECRET_TOKEN)  
+        } 
+        catch (error) {
+            return resp.status(404).json({error: "Invalid token"})   
+        }
+        next()
     }
-    else {
-        resp.status(500).json({error: " Authorization Required"})
+    else{
+        resp.status(404).json({error: "Token required!"})
     }
 }
 
@@ -25,5 +40,5 @@ async function scheduleUserCheck(req, resp, next) {
 
 module.exports = {
     scheduleSchema,
-    scheduleUserCheck
+    verifyToken,
 }

@@ -15,7 +15,7 @@ function generateAccessToken(string) {
 
 // add login verification to generate token 
 router.get("/", (req, resp) => {
-    resp.json({token: "test123"})
+    resp.json("Please Create an acount at :")
 })
 
 router.post("/", loginSchema, validationError, async (req, resp) => {
@@ -27,25 +27,17 @@ router.post("/", loginSchema, validationError, async (req, resp) => {
         const validPassword = await bcrypt.compare(password, verifiedUser.password)
         if(validPassword){
             const token = generateAccessToken(verifiedUser.username)
-            console.log(token)
             req.token = token
             resp.status(200).json({
                 message: "Login success",
                 userName: verifiedUser.username,
                 userId : verifiedUser.id,
-                JWT: token,
+                JWT: token
             })
         }
         else {
             resp.status(404).json("Invalid Password")
         }
-        // validPassword ? 
-        // resp.status(200).json({
-        //     userName: verifiedUser.username,
-        //     token: verifiedUser.password,
-        //     id : verifiedUser.id,
-        // }) :
-        // resp.status(404).json("Invalid Password")
     }
     else {
         resp.status(404).json("User not found")
