@@ -1,25 +1,25 @@
 const express = require("express")
 // merge params with calendar
 const router = express.Router({mergeParams: true})
-const { scheduleSchema, scheduleUserCheck } = require("../Validations/scheduleValidation.js") 
+const { scheduleSchema, verifyToken } = require("../Validations/scheduleValidation.js") 
 const { validationError } = require("../Validations/errorValidation.js")
 const { getSchedule, createSchedule, getOneSchedule, deleteSchedule, updateSchedule } = require("../Queries/schedule-queries.js")
 
-router.use(scheduleUserCheck)
+router.use(verifyToken)
 
-// get ENTIRE SCHEDULE needs queries based on user access OR GET SCHEDULE BY DATE (calendar merge params)
+// get ENTIRE SCHEDULE uses jwt verification for user acces based on user access OR GET SCHEDULE BY DATE (calendar merge params)
 router.get("/", async (req,resp) => {
     const { date } = req.params 
-    const { userId } = req.query
+    
     
     if(date){
-        const schedule = await getSchedule(userId, date)
+        const schedule = await getSchedule(req.body.userId, date)
         schedule[0] ?
         resp.status(200).json(schedule) :
         resp.status(200).json("No schedule available")
     }
     else {
-        const schedule = await getSchedule(userId)
+        const schedule = await getSchedule(req.body.userId)
         schedule[0] ?
         resp.status(200).json(schedule) :
         resp.status(200).json("No schedule available")
