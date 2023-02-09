@@ -16,7 +16,6 @@ router.post("/", loginSchema, validationError, async (req, resp) => {
     if(verifiedUser.id){
         // now authenticate password
         const validPassword = await bcrypt.compare(password, verifiedUser.password)
-        console.log(verifiedUser)
         validPassword ? 
         resp.status(200).json({
             userName: verifiedUser.username,

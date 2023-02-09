@@ -23,7 +23,7 @@ async function createUser (obj) {
 // function to check if userName is available
 async function userExist(string) {
     try {
-        const userNameExists = await database.one('SELECT * FROM users WHERE username = $1 RETURNING *', string)
+        const userNameExists = await database.one('SELECT username FROM users WHERE username = $1 RETURNING*', string)
      
         return userNameExists
     } 
@@ -36,7 +36,7 @@ async function userExist(string) {
 async function deleteUser(idValue) {
     try {
         const deletedUser = await database.one(
-            'DELETE FROM users WHERE id = $1, RETURNING *', idValue
+            'DELETE FROM users WHERE id = $1 RETURNING *', idValue
         )
         return deletedUser
         
