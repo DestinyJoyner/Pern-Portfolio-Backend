@@ -30,7 +30,7 @@ async function getSchedule (userIdValue){
 async function createSchedule(obj){
     try {
         const newSchedule = await database.one(
-            'INSERT INTO schedules(day_start, title, description, important, user_id) VALUES ($1, $2, $3, $4, $5, ) RETURNING *',
+            'INSERT INTO schedules(day_start, title, description, important, user_id) VALUES ($1, $2, $3, $4, $5) RETURNING *',
             [
                 obj.day_start,
                 obj.title, 
@@ -40,7 +40,6 @@ async function createSchedule(obj){
             ]
         )
         return newSchedule
-        
     } 
     catch (error) {
         return error
