@@ -3,7 +3,7 @@ const express = require("express")
 const router = express.Router({mergeParams: true})
 const { scheduleSchema, verifyToken } = require("../Validations/scheduleValidation.js") 
 const { validationError } = require("../Validations/errorValidation.js")
-const { getSchedule, createSchedule, getOneSchedule, deleteSchedule, updateSchedule } = require("../Queries/schedule-queries.js")
+const { getSchedule, createSchedule, getOneSchedule, deleteSchedule, updateSchedule, newGetSchedule } = require("../Queries/schedule-queries.js")
 
 router.use(verifyToken)
 
@@ -19,7 +19,7 @@ router.get("/", async (req,resp) => {
         resp.status(400).json("nothing from database")
     }
     else {
-        const allSchedule = await getSchedule(user_id)
+        const allSchedule = await newGetSchedule(user_id)
         allSchedule[0] ?
         resp.status(200).json(allSchedule) :
         resp.status(400).json("no data right condtional")
@@ -39,7 +39,6 @@ router.post("/", scheduleSchema, validationError, async (req, resp) => {
     else {
         resp.status(404). json({error: "Cannot post to this url"})
     }
-   
 })
 
 // GET ONE SCHEDULED EVENT

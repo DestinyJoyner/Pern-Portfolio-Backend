@@ -1,5 +1,16 @@
 const database = require("../database/databaseConfig.js")
-// 
+
+
+async function newGetSchedule (id) {
+    try {
+        const all = await database.any('SELECT*FROM schedules WHERE user_id=$1',id)
+        return all
+    } catch (error) {
+        return error
+        
+    }
+}
+
 async function getSchedule (userIdValue){
     // if(dateValue){
     //     try {
@@ -17,6 +28,7 @@ async function getSchedule (userIdValue){
     // else{
         try {
             const userSchedule = await database.any('SELECT * FROM schedules WHERE user_id=$1', userIdValue)
+
             return userSchedule
         } 
         catch (error) {
@@ -97,6 +109,7 @@ module.exports = {
     createSchedule,
     getOneSchedule,
     deleteSchedule,
-    updateSchedule
+    updateSchedule,
+    newGetSchedule
     
 }
