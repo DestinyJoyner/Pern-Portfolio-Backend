@@ -10,18 +10,16 @@ router.use(verifyToken)
 // get ENTIRE SCHEDULE uses jwt verification for user acces based on user access OR GET SCHEDULE BY DATE (calendar merge params)
 router.get("/", async (req,resp) => {
     const { date } = req.params 
-    const { user_id } = req.body
-    console.log(req.body)
-    const userId = req.body.user_id
+    const { userId } = req.query
     
     if(date){
-        const schedule = await getSchedule(user_id, date)
+        const schedule = await getSchedule(userId, date)
         schedule[0] ?
         resp.status(200).json(schedule) :
         resp.status(400).json("nothing from database")
     }
     else {
-        const allSchedule = await newGetSchedule(userId)
+        const allSchedule = await getSchedule(userId)
         console.log(allSchedule)
         allSchedule[0] ?
         resp.status(200).json(allSchedule) :
