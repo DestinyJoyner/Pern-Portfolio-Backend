@@ -11,7 +11,7 @@ async function newGetSchedule (id) {
     }
 }
 
-async function getSchedule (userIdValue){
+async function getSchedule (userIdValue, dateValue=false){
     if(dateValue){
         try {
             const eventsForDate = await database.any('SELECT * FROM schedules WHERE day_start =$1 AND user_id = $2', 
