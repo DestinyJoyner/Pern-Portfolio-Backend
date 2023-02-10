@@ -16,13 +16,13 @@ router.get("/", async (req,resp) => {
         const schedule = await getSchedule(user_id, date)
         schedule[0] ?
         resp.status(200).json(schedule) :
-        resp.status(200).json("No schedule available")
+        resp.status(400).json("nothing from database")
     }
     else {
-        const schedule = await getSchedule(user_id)
-        schedule[0] ?
-        resp.status(200).json(schedule) :
-        resp.status(200).json("No schedule available")
+        const allSchedule = await getSchedule(user_id)
+        allSchedule[0] ?
+        resp.status(200).json(allSchedule) :
+        resp.status(400).json("no data right condtional")
     }      
 })
 
