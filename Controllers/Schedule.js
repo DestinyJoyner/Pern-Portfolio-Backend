@@ -11,6 +11,7 @@ router.use(verifyToken)
 router.get("/", async (req,resp) => {
     const { date } = req.params 
     const { user_id } = req.body
+    console.log(user_id)
     const userId = req.body.user_id
     
     if(date){
@@ -21,7 +22,7 @@ router.get("/", async (req,resp) => {
     }
     else {
         const allSchedule = await newGetSchedule(userId)
-        console.log(userId, allSchedule)
+        console.log(allSchedule)
         allSchedule[0] ?
         resp.status(200).json(allSchedule) :
         resp.status(400).json("no data right condtional")
