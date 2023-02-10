@@ -16,7 +16,7 @@ CREATE TABLE calendar (
 DO $$
 DECLARE 
 StartDate TIMESTAMP := '2021-01-01';
-EndDate TIMESTAMP := CURRENT_DATE + interval '5 years';
+EndDate TIMESTAMP := CURRENT_DATE + interval '3 years';
 BEGIN
 WHILE StartDate <= EndDate LOOP
 INSERT INTO calendar (cal_date, cal_month, cal_day, cal_year, cal_day_name, cal_month_name) VALUES  

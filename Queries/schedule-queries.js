@@ -1,28 +1,28 @@
 const database = require("../database/databaseConfig.js")
-
-async function getSchedule (userIdValue, dateValue=false){
-    if(dateValue){
+// 
+async function getSchedule (userIdValue){
+    // if(dateValue){
+    //     try {
+    //         const eventsForDate = await database.any('SELECT * FROM schedules WHERE day_start =$1 AND user_id = $2', 
+    //         [
+    //             dateValue,
+    //             userIdValue
+    //         ])
+    //         return eventsForDate 
+    //     } 
+    //     catch (error) {
+    //         return error
+    //     }
+    // }
+    // else{
         try {
-            const eventsForDate = await database.any('SELECT * FROM schedules WHERE day_start =$1 AND user_id = $2', 
-            [
-                dateValue,
-                userIdValue
-            ])
-            return eventsForDate 
+            const userSchedule = await database.any('SELECT * FROM schedules WHERE user_id=$1', userIdValue)
+            return userSchedule
         } 
         catch (error) {
-            return error
+            return error   
         }
-    }
-    else{
-        try {
-        const userSchedule = await database.any('SELECT * FROM schedules WHERE user_id =$1', userIdValue)
-        return userSchedule
-    } 
-    catch (error) {
-        return error   
-    }
-    }
+    // }
     
 }
 

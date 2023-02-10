@@ -4,11 +4,10 @@ const database = require("../database/databaseConfig.js")
 async function createUser (obj) {
     try {
         const newUser = await database.one(
-            'INSERT INTO users (userName, password,admin_access) VALUES ($1, $2, $3) RETURNING *', 
+            'INSERT INTO users (userName, password) VALUES ($1, $2) RETURNING *', 
             [
                 obj.userName,
-                obj.password,
-                obj.admin_access
+                obj.password
             ]
         )
     return newUser 
