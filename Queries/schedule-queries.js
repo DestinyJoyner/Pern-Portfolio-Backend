@@ -17,7 +17,6 @@ async function getSchedule (userIdValue, dateValue=false){
     else{
         try {
         const userSchedule = await database.any('SELECT * FROM schedules WHERE user_id =$1', userIdValue)
-
         return userSchedule
     } 
     catch (error) {
