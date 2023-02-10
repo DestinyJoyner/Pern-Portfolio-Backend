@@ -20,6 +20,7 @@ router.get("/", async (req,resp) => {
     }
     else {
         const allSchedule = await newGetSchedule(user_id)
+        console.log(user_id, allSchedule)
         allSchedule[0] ?
         resp.status(200).json(allSchedule) :
         resp.status(400).json("no data right condtional")
