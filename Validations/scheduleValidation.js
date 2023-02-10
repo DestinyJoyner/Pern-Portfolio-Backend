@@ -24,12 +24,13 @@ function verifyToken(req, resp, next) {
     if(tokenExist){
         // use try catch to catch thrown error from jwt.verify (will return custom error not run the 'else' if use if/else)
         try {
-            const verify = jwt.verify(tokenExist, process.env.SECRET_TOKEN)  
+            const verify = jwt.verify(tokenExist, process.env.SECRET_TOKEN)
+            req.verify = verify  
         } 
         catch (error) {
             return resp.status(404).json({error: "Invalid token"})   
         }
-        next()
+        return next()
     }
     else{
         resp.status(404).json({error: "Token required!"})
