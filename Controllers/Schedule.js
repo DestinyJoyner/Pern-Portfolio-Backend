@@ -11,7 +11,7 @@ router.use(verifyToken)
 router.get("/", async (req,resp) => {
     const { date } = req.params 
     const { user_id } = req.body
-    console.log(user_id)
+    console.log(req.body)
     const userId = req.body.user_id
     
     if(date){
