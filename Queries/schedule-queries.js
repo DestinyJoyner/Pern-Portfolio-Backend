@@ -29,7 +29,7 @@ async function getSchedule (userIdValue){
 // function new scheduled event
 async function createSchedule(obj){
     try {
-        const newSchedule = database.one(
+        const newSchedule = await database.one(
             'INSERT INTO schedules(day_start, title, description, important, user_id) VALUES ($1, $2, $3, $4, $5, ) RETURNING *',
             [
                 obj.day_start,
