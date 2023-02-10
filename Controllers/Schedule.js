@@ -13,13 +13,13 @@ router.get("/", async (req,resp) => {
     
     
     if(date){
-        const schedule = await getSchedule(req.body.userId, date)
+        const schedule = await getSchedule(req.body.user_id, date)
         schedule[0] ?
         resp.status(200).json(schedule) :
         resp.status(200).json("No schedule available")
     }
     else {
-        const schedule = await getSchedule(req.body.userId)
+        const schedule = await getSchedule(req.body.user_id)
         schedule[0] ?
         resp.status(200).json(schedule) :
         resp.status(200).json("No schedule available")

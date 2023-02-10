@@ -1,19 +1,10 @@
 const express = require("express")
 const bcrypt = require("bcryptjs")
 const router = express.Router()
-const dotenv = require("dotenv")
-dotenv.config()
 const { getUser } = require("../Queries/login-queries.js")
-const { loginSchema } = require("../Validations/loginValidation.js")
+const { loginSchema, generateAccessToken } = require("../Validations/loginValidation.js")
 const { validationError } = require("../Validations/errorValidation.js")
 
-// json web token testing
-const jwt = require("jsonwebtoken")
-function generateAccessToken(string) {
-    return jwt.sign({username: string}, process.env.SECRET_TOKEN, {expiresIn: '1h' } );
-  }
-
-// add login verification to generate token 
 router.get("/", (req, resp) => {
     resp.json("Please Create an acount at :")
 })
@@ -27,12 +18,12 @@ router.post("/", loginSchema, validationError, async (req, resp) => {
         const validPassword = await bcrypt.compare(password, verifiedUser.password)
         if(validPassword){
             const token = generateAccessToken(verifiedUser.username)
-            req.token = token
+
             resp.status(200).json({
                 message: "Login success",
                 userName: verifiedUser.username,
                 userId : verifiedUser.id,
-                JWT: token
+                jwt: token
             })
         }
         else {
