@@ -3,7 +3,7 @@ const database = require("../database/databaseConfig.js")
 
 async function newGetSchedule (id) {
     try {
-        const all = await database.any('SELECT*FROM schedules WHERE user_id=$1',id)
+        const all = await database.any('SELECT*FROM schedules WHERE user_id=$1', id)
         return all
     } catch (error) {
         return error
