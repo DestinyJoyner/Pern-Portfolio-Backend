@@ -3,7 +3,7 @@ const express = require("express")
 const router = express.Router({mergeParams: true})
 const { scheduleSchema, verifyToken } = require("../Validations/scheduleValidation.js") 
 const { validationError } = require("../Validations/errorValidation.js")
-const { getSchedule, createSchedule, getOneSchedule, deleteSchedule, updateSchedule, newGetSchedule } = require("../Queries/schedule-queries.js")
+const { getSchedule, createSchedule, getOneSchedule, deleteSchedule, updateSchedule } = require("../Queries/schedule-queries.js")
 
 router.use(verifyToken)
 
