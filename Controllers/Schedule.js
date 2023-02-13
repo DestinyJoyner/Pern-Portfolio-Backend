@@ -16,7 +16,7 @@ router.get("/", async (req,resp) => {
         const schedule = await getSchedule(userId, date)
         schedule[0] ?
         resp.status(200).json(schedule) :
-        resp.status(400).json("nothing from database")
+        resp.status(400).json(false)
     }
     else {
         const allSchedule = await getSchedule(userId)
