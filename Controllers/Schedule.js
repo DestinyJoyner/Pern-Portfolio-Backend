@@ -16,14 +16,14 @@ router.get("/", async (req,resp) => {
         const schedule = await getSchedule(userId, date)
         schedule[0] ?
         resp.status(200).json(schedule) :
-        resp.status(400).json(false)
+        resp.status(200).json(false)
     }
     else {
         const allSchedule = await getSchedule(userId)
 
         allSchedule.length > 0 ?
         resp.status(200).json(allSchedule) :
-        resp.status(200).json("No events In schedule")
+        resp.status(200).json(false)
     }      
 })
 
