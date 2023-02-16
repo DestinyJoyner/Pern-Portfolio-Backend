@@ -18,8 +18,10 @@ This server was built using EXPRESS, POSTGRESQL, JWT (JSON web token), BCRYPT, a
 
 - You will need to be connected to your local database (POSTGRESQL) in order to successfully run the `.sql` files in the database folder.
 
-- You can run the command `dbinit` in your terminal to creat the tables necessary for this application
+- You can run the command `npm run dbinit` in your terminal to create the tables necessary for this application
 
-- There isn't any initial seed data for theis application, however if you choose to add your own you can run the `dbseed` command to seed the data into your tables
+- There isn't any initial seed data for this application, however if you choose to add your own you can run the `npm run dbseed` command to seed the data into your tables
+
+- Once you're all set up run the command `npm run dev` in your terminal to start up the server
 
 - Once the front end application is cloned down as well (link above), use your local host port and url as the environmental variable in the front end application.
