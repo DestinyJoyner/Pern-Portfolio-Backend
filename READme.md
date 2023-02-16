@@ -22,6 +22,6 @@ This server was built using EXPRESS, POSTGRESQL, JWT (JSON web token), BCRYPT, a
 
 - There isn't any initial seed data for this application, however if you choose to add your own you can run the `npm run dbseed` command to seed the data into your tables
 
-- Once you're all set up run the command `npm run dev` in your terminal to start up the server
+- Once you're all set up, run the command `npm run dev` in your terminal to start up the server
 
 - Once the front end application is cloned down as well (link above), use your local host port and url as the environmental variable in the front end application.
