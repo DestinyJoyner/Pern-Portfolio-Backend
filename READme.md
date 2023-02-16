@@ -2,7 +2,7 @@
 
 This backend server is intended to be used with my [Calendar Application Repo Here!](https://github.com/DestinyJoyner/Pern-Portfolio-Project-frontend)
 
-This server was built using EXPRESS 
+This server was built using EXPRESS, JWT (JSON web token), BCRYPT, and EXPRESS-VALIDATOR 
 
 ## Instructions
 
