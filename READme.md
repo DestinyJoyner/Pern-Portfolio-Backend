@@ -2,7 +2,7 @@
 
 This backend server is intended to be used with my [Calendar Application Repo Here!](https://github.com/DestinyJoyner/Pern-Portfolio-Project-frontend)
 
-This server was built using EXPRESS, JWT (JSON web token), BCRYPT, and EXPRESS-VALIDATOR 
+This server was built using EXPRESS, POSTGRESQL, JWT (JSON web token), BCRYPT, and EXPRESS-VALIDATOR 
 
 ## Instructions
 
@@ -15,5 +15,11 @@ This server was built using EXPRESS, JWT (JSON web token), BCRYPT, and EXPRESS-V
 - To the `.env` file, add a `SECRET_TOKEN` variable and set to a generated hex value you can get here -> https://www.browserling.com/tools/random-hex
 
 - This `SECRET_TOKEN` value is needed in order to successfully implement the user authentication/ web token features
+
+- You will need to be connected to your local database (POSTGRESQL) in order to successfully run the `.sql` files in the database folder.
+
+- You can run the command `dbinit` in your terminal to creat the tables necessary for this application
+
+- There isn't any initial seed data for theis application, however if you choose to add your own you can run the `dbseed` command to seed the data into your tables
 
 - Once the front end application is cloned down as well (link above), use your local host port and url as the environmental variable in the front end application.
