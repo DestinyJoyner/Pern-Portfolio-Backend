@@ -4,7 +4,7 @@ const database = require("../database/databaseConfig.js")
 async function createUser (obj) {
     try {
         const newUser = await database.one(
-            'INSERT INTO users (userName, password) VALUES ($1, $2) RETURNING *', 
+            'INSERT INTO calendar_users (userName, password) VALUES ($1, $2) RETURNING *', 
             [
                 obj.userName,
                 obj.password
@@ -22,7 +22,7 @@ async function createUser (obj) {
 // function to check if userName is available
 async function userExist(string) {
     try {
-        const userNameExists = await database.one('SELECT username FROM users WHERE username = $1', string)
+        const userNameExists = await database.one('SELECT username FROM calendar_users WHERE username = $1', string)
      
         return userNameExists
     } 
@@ -35,7 +35,7 @@ async function userExist(string) {
 async function deleteUser(idValue) {
     try {
         const deletedUser = await database.one(
-            'DELETE FROM users WHERE id = $1 RETURNING *', idValue
+            'DELETE FROM calendar_users WHERE id = $1 RETURNING *', idValue
         )
         return deletedUser
         

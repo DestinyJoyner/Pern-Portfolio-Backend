@@ -7,7 +7,7 @@ CREATE TABLE schedules (
     description TEXT,
     important BOOL,
     user_id INT NOT NULL,
-    FOREIGN KEY (user_id) REFERENCES users(id) ON
+    FOREIGN KEY (user_id) REFERENCES calendar_users(id) ON
     DELETE CASCADE
 );
 

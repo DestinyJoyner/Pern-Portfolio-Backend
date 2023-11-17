@@ -3,7 +3,7 @@ const database = require("../database/databaseConfig.js")
 //get ONE user
 async function getUser(string) {
     try {
-        const user = await database.one('SELECT * FROM users WHERE userName = $1', string)
+        const user = await database.one('SELECT * FROM calendar_users WHERE userName = $1', string)
         return user
         
     } 
@@ -16,7 +16,7 @@ async function getUser(string) {
 //get user by id
 async function getUserId (idValue) {
     try {
-        const user = await database.one('SELECT * FROM users WHERE id = $1', idValue)
+        const user = await database.one('SELECT * FROM calendar_users WHERE id = $1', idValue)
         return user
         
     } 
